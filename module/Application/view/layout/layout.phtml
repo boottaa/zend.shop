@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">-->
+
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
+
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <?=
+        $this->headTitle('IGP - Image generate pro')->setSeparator(' - ')->setAutoEscape(false);
+        $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+        <link href="/static/style/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link rel="stylesheet" href="/static/style/all.css"
+              integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <style>
+            /*HACK FOR IOS (iphone ipad etc)*/
+            table
+            {
+                table-layout: fixed;
+                max-width: 100%;
+                width: 100%;
+                word-break: break-all;
+            }
+        </style>
+        <!--css for jquery-responsive-tables-->
+        <link href="/static/jquery-responsive-tables-master/css/responsive-tables.min.css" rel="stylesheet">
+        <!--end-->
+
+        <script src="/static/javascript/jquery.min.js"></script>
+        <script src="/static/javascript/bootstrap.min.js"></script>
+        <script src="/static/edmin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+        <!--js for jquery-responsive-tables-->
+        <script src="/static/jquery-responsive-tables-master/js/app.js"></script>
+        <script src="/static/jquery-responsive-tables-master/js/jquery.responsive-tables.min.js"></script>
+        <!--end-->
+    </head>
+    <body style="width: 100%">
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="<?= $this->url('home') ?>"><b style="color: rgb(40, 167, 69); ">IGP</b>.<small>pw</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <?= $this->navigation('default')->menu()->setUlClass('navbar-nav') ?>
+        </div>
+    </nav>
+
+    <div style="margin: 100px"></div>
+    <?= $this->content ?>
+    </body>
+</html>
