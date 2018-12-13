@@ -5,19 +5,17 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application;
+namespace Shop;
 
-use Application\Model\FollowLinks;
-use Application\Model\Links;
-use Application\Model\Users;
-use Auth\Helpers\Session;
+
 use Interop\Container\ContainerInterface;
+use Shop\Helpers\Cart;
+use Shop\Model\Goods;
+use Shop\Model\Orders;
 use Zend\Db\Adapter\AdapterInterface;
-use Zend\Db\Sql\Sql;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Log\Logger;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\Navigation\Navigation;
+
 
 class Module implements ConfigProviderInterface
 {
@@ -28,42 +26,9 @@ class Module implements ConfigProviderInterface
         return include __DIR__ . '/../config/module.config.php';
     }
 
-    public function getServiceConfig()
-    {
-        return [
-            'factories' => [
-                Session::class => function( $container )
-                {
-                    /**
-                     * @var  ContainerInterface $container
-                     */
-                    $adapter = $container->get(AdapterInterface::class);
-                    return new Session(new TableGateway('sessions', $adapter));
-                }
-            ]
-        ];
-    }
-
     public function getControllerConfig()
     {
         return [
-            'initializers' => [
-                function ( $container ) {
-                    /**
-                     * @var  ContainerInterface $container
-                     * @var Navigation $navigation
-                     * @var Session $session
-                     */
-                    $session = ($container->get(Session::class));
-                    if ($session->checkSession()) {
-                        $navigation = $container->get(Navigation::class);
-                        $navigation->findOneBy('label', 'Login')->set('visible', false);
-                        $navigation->findOneBy('label', 'Admin')->set('visible', true);
-                        $navigation->findOneBy('label', 'Logout')->set('visible', true);
-                    }
-                }
-            ],
-
             'factories' => [
                 Controller\IndexController::class => function ($container) {
                     /**
@@ -72,37 +37,26 @@ class Module implements ConfigProviderInterface
                     $adapter = $container->get(AdapterInterface::class);
                     $logger = $container->get(Logger::class);
                     $isDebug = ($container->get('config'))['isDebug'];
-                    $users = new Users($adapter, $logger, $isDebug);
-                    $session = ($container->get(Session::class));
+                    $goods = new Goods($adapter, $logger, $isDebug);
+                    $orders = new Orders($adapter, $logger, $isDebug);
 
-                    return new Controller\IndexController($users);
+                    return new Controller\IndexController($goods, $orders);
                 },
-                Controller\AdminController::class => function ($container) {
+                Controller\CartController::class => function ($container) {
                     /**
                      * @var  ContainerInterface $container
                      */
                     $adapter = $container->get(AdapterInterface::class);
                     $logger = $container->get(Logger::class);
                     $isDebug = ($container->get('config'))['isDebug'];
-                    $session = ($container->get(Session::class));
-                    $modelLinks = new Links($adapter, $logger, $isDebug);
+                    $goods = new Goods($adapter, $logger, $isDebug);
+                    $orders = new Orders($adapter, $logger, $isDebug);
 
-                    return new Controller\AdminController($modelLinks, $session);
+                    return new Controller\CartController($goods, $orders, new Cart());
                 },
-
-                Controller\IgpController::class => function ($container) {
-                    /**
-                     * @var  ContainerInterface $container
-                     */
-                    $adapter = $container->get(AdapterInterface::class);
-                    $logger = $container->get(Logger::class);
-                    $isDebug = ($container->get('config'))['isDebug'];
-                    $modelLinks = new Links($adapter, $logger, $isDebug);
-                    $session = ($container->get(Session::class));
-
-                    return new Controller\IgpController($modelLinks, $session);
-                }
             ]
+
+
         ];
     }
 }

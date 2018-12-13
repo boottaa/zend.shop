@@ -24,7 +24,7 @@
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Auth\\": "module/Auth/src/",
-            "Helpers\\": "helpers/src/"
+            "Shop\\": "module/Shop/src/"
         }
     }
 }

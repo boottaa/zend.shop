@@ -5,7 +5,7 @@
  * Date: 07.03.18
  * Time: 15:00
  */
-namespace Application\Model;
+namespace Shop\Model;
 
 use Zend\InputFilter\InputFilter;
 

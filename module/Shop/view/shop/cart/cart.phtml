@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <h1>Корзина</h1> <br>
+
+            <?php if(!empty($items)): ?>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Название</th>
+                        <th scope="col" class="text-center">Количество</th>
+                        <th scope="col" class="text-right">Цена</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php foreach($items as $id => $item): ?>
+                    <tr>
+                        <td><img style="width: 40px" src="<?= $item['image'] ?>"></td>
+                        <td><?= $item['title'] ?></td>
+                        <td><input class="form-control" type="text" value="<?= $item['count'] ?>"></td>
+                        <td class="text-right"><?= $item['full_price'] ?></td>
+                        <td class="text-right">
+                            <button class="btn btn-sm btn-danger" onclick="sendGetRequest('<?= $this->url('cart', ['action' => 'del', 'id' => $id]) ?>'); document.location.reload();">Удалить</button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Доставка</td>
+                        <td class="text-right">300 RUB</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Итого</strong></td>
+                        <td class="text-right"><strong><?= $total_price ?></strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <?php else: ?>
+                <p>Корзина пуста</p>
+            <?php endif; ?>
+
+        </div>
+        <!--end of col-->
+    </div>
+
+</div>

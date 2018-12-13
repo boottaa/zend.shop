@@ -37,10 +37,10 @@ return [
             'routes' => [
                 'user-reset-password' => [
                     'options' => [
-                        'route'    => 'user resetpassword [--verbose|-v] <userEmail>',
+                        'route'    => 'init',
                         'defaults' => [
                             'controller' => ConsoleController::class,
-                            'action'     => 'resetpassword',
+                            'action'     => 'init',
                         ],
                     ],
                 ],

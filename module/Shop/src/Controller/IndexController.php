@@ -5,30 +5,54 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application\Controller;
+namespace Shop\Controller;
 
-use Application\Model\Base;
-use Application\Model\Users;
-use Auth\Helpers\IPAPI;
-use Auth\Helpers\Session;
-use Auth\Helpers\UserInfo;
+use Shop\Model\Orders;
+use Shop\Model\Goods;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
-    /**
-     * @var Users
-     */
-    private $users;
-    function __construct(Users $users)
+    private $goods, $orders;
+
+    function __construct(Goods $goods, Orders $orders)
     {
-        $this->users = $users;
+        $this->goods = $goods;
+        $this->orders = $orders;
     }
 
     public function indexAction()
     {
-        return new ViewModel();
+
+        $goods = iterator_to_array($this->goods->fetchAll());
+        array_walk($goods, function(&$item){
+            if( empty($item['image']) ){
+                $item['image'] = 'no_image.png';
+            }
+            $item['image'] = '/static/images/' . $item['image'];
+        });
+
+        return new ViewModel([ 'items' =>  $goods]);
     }
 
+    public function productAction()
+    {
+
+        $id = $this->params()->fromRoute('id');
+        $product = [];
+
+        try{
+            $product = $this->goods->getOnly(['id' => $id]);
+            if (empty($product['image'])) {
+                $product['image'] = 'no_image.png';
+            }
+            $product['image'] = '/static/images/' . $product['image'];
+
+        }catch (\Exception $e){
+            $this->getResponse()->setStatusCode(404);
+        }
+
+        return new ViewModel(['item' => $product]);
+    }
 }

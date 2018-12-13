@@ -11,6 +11,7 @@ return [
     'Zend\Mvc\Console',
 	'Application',
     'Auth',
+    'Shop',
 ];
 
 ?>

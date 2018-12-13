@@ -18,8 +18,10 @@
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
         <link href="/static/style/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
         <link rel="stylesheet" href="/static/style/all.css"
               integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
         <style>
             /*HACK FOR IOS (iphone ipad etc)*/
             table
@@ -41,6 +43,7 @@
         <!--js for jquery-responsive-tables-->
         <script src="/static/jquery-responsive-tables-master/js/app.js"></script>
         <script src="/static/jquery-responsive-tables-master/js/jquery.responsive-tables.min.js"></script>
+        <script src="/static/javascript/ajaxRequest.js"></script>
         <!--end-->
     </head>
     <body style="width: 100%">
@@ -56,6 +59,7 @@
     </nav>
 
     <div style="margin: 100px"></div>
+    <?php echo $this->navigation()->breadcrumbs() ; ?>
     <?= $this->content ?>
     </body>
 </html>

@@ -83,12 +83,8 @@ class Module implements ConfigProviderInterface
                      * @var  ContainerInterface $container
                      */
                     $adapter = $container->get(AdapterInterface::class);
-                    $logger = $container->get(Logger::class);
-                    $isDebug = ($container->get('config'))['isDebug'];
-                    $users = new Users($adapter, $logger, $isDebug);
-                    $session = ($container->get(Session::class));
 
-                    return new Controller\ConsoleController();
+                    return new Controller\ConsoleController($adapter);
                 }
             ]
         ];

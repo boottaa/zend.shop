@@ -5,7 +5,7 @@
  * Date: 07.03.18
  * Time: 15:00
  */
-namespace Application\Model;
+namespace Shop\Model;
 
 use Zend\InputFilter\InputFilter;
 
@@ -18,13 +18,17 @@ class Goods extends Base
         'id_user' => 0, //Id пользователя который добавил товар если ноль то товар добавился автоматичиски через систему интеграции.
         'id_category' => 1,
         'title' => '', //Название товара
+        'description_short' => '', //Описание товара
         'description' => '', //Описание товара
         'price' => '', //цена товара
+        'old_price' => null, //цена товара до скидки
         'keywords' => '', //Теги для SEO
         'currency' => '', //Валюта в которой указана цена.
         'date_time' => null,
         'is_deleted' => null,
-
+        'rating' => '0', // звездочки товара
+        'image' => null, //Картинка товара
+        'article' => null //Номер товара
     ];
 
     public function getInputFilter()

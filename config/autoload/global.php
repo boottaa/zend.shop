@@ -16,6 +16,22 @@ use Zend\Log\Writer\Stream;
 return [
     'isDebug' => true,
     'root_dir' => (__DIR__).'/../../',
+
+    'shop' => [
+        'currency' => 'RUB',
+        'shipping' => [
+            'types' => [
+                [
+                    'label' => 'Доставка курьером',
+                    'price' => '300'
+                ]
+            ],
+        ],
+        'payment' => [
+            'methods' => [],
+        ]
+    ],
+
 	'db' => [
 		'driver'         => 'Pdo',
 		'dsn'            => 'mysql:dbname=shop;host=localhost',

@@ -10,34 +10,19 @@
 return [
     'default' => [
         [
-            'label' => 'Home',
+            'label' => 'Главная',
             'route' => 'home',
             'class' => 'nav-link',
         ],
-
-    ],
-
-    'admin_links' => [
         [
-            //Информация по ссылкам (колечество переходов, интерактивная карта и количество переходов с разных стран и городов)
-
-            'label' => 'Dashboard',
-            'icon' => 'menu-icon icon-dashboard',
-            'route' => 'admin',
+            'label' => 'Витрина',
+            'route' => 'shop',
             'class' => 'nav-link',
         ],
-
         [
-            'label' => 'My links',
-            'route' => 'admin',
+            'label' => 'Корзина',
+            'route' => 'cart',
             'class' => 'nav-link',
-            'action' => 'mylinks',
-        ],
-        [
-            'label' => 'Portfolio',
-            'route' => 'admin',
-            'class' => 'nav-link',
-            'action' => 'portfolio',
-        ],
-    ],
+        ]
+    ]
 ];

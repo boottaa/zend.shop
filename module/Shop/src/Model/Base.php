@@ -6,7 +6,7 @@
  * Time: 14:13
  */
 
-namespace Application\Model;
+namespace Shop\Model;
 
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;

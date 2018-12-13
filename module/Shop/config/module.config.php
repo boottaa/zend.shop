@@ -5,29 +5,64 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application;
+namespace Shop;
 
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
-use Zend\Router\Http\Method;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
-$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
 
 return [
-    'console' => [
-        'router' => [
-            'routes' => [
-                'user-reset-password' => [
-                    'options' => [
-                        'route'    => 'user resetpassword [--verbose|-v] <userEmail>',
-                        'defaults' => [
-                            'controller' => Application\Controller\Index::class,
-                            'action'     => 'resetpassword',
-                        ],
+    'router' => [
+        'routes' => [
+            'shop' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/_shop[/:id]',
+                    'constraints' => [
+                        'id' => '[0-9A-z]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'index',
                     ],
                 ],
             ],
+            'cart' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/_cart[/:action][/:id]',
+                    'constraints' => [
+                        'action' => '[0-9A-z]+',
+                        'id' => '[0-9A-z]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\CartController::class,
+                        'action'     => 'cart',
+                    ],
+                ],
+            ],
+
+
+
+            'product' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/_product[/:id]',
+                    'constraints' => [
+                        'id' => '[0-9A-z]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'product',
+                    ],
+                ],
+            ],
+        ],
+    ],
+
+    'view_manager' => [
+        'template_path_stack' => [
+            __DIR__ . '/../view',
         ],
     ],
 ];
