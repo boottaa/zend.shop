@@ -24,16 +24,19 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+        $page = $this->params()->fromQuery('page');
 
-        $goods = iterator_to_array($this->goods->fetchAll());
-        array_walk($goods, function(&$item){
+        $goods_pagination = $this->goods->fetchAll()->setItemCountPerPage(10);
+        $goods_pagination->setCurrentPageNumber($page);
+
+        foreach ($goods_pagination as &$item){
             if( empty($item['image']) ){
                 $item['image'] = 'no_image.png';
             }
             $item['image'] = '/static/images/' . $item['image'];
-        });
+        };
 
-        return new ViewModel([ 'items' =>  $goods]);
+        return new ViewModel([ 'items' =>  $goods_pagination]);
     }
 
     public function productAction()

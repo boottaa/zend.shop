@@ -29,11 +29,10 @@
                     <?= !empty($item['description']) ? $item['description'] : $item['description_short'] ?>
                 </p>
 
-                <form method="get" action="cart.html">
-                    <a href="cart.html" class="btn btn-success btn-lg btn-block text-uppercase">
-                        Добавить в карзину
-                    </a>
-                </form>
+                <button onclick="sendGetRequest('<?= $this->url('cart', ['action' => 'add', 'id' => $item['id']]) ?>');"
+                        class="btn btn-success btn-lg btn-block text-uppercase">
+                    Добавить в карзину
+                </button>
 
 
             </div>
