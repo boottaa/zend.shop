@@ -26,6 +26,24 @@ class Module implements ConfigProviderInterface
         return include __DIR__ . '/../config/module.config.php';
     }
 
+    public function getServiceConfig()
+    {
+        return [
+            'factories' => [
+                'options' => function( $container )
+                {
+                    /**
+                     * @var  ContainerInterface $container
+                     */
+                    return [
+                        'debug' => ($container->get('config'))['isDebug'],
+                        'shop' => ($container->get('config'))['shop'],
+                    ];
+                }
+            ]
+        ];
+    }
+
     public function getControllerConfig()
     {
         return [
@@ -36,11 +54,12 @@ class Module implements ConfigProviderInterface
                      */
                     $adapter = $container->get(AdapterInterface::class);
                     $logger = $container->get(Logger::class);
-                    $isDebug = ($container->get('config'))['isDebug'];
-                    $goods = new Goods($adapter, $logger, $isDebug);
-                    $orders = new Orders($adapter, $logger, $isDebug);
+                    $options = $container->get('options');
 
-                    return new Controller\IndexController($goods, $orders);
+                    $goods = new Goods($adapter, $logger, $options);
+                    $orders = new Orders($adapter, $logger, $options);
+
+                    return new Controller\IndexController($options, $goods, $orders);
                 },
                 Controller\CartController::class => function ($container) {
                     /**

@@ -14,10 +14,11 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
-    private $goods, $orders;
+    private $options, $goods, $orders;
 
-    function __construct(Goods $goods, Orders $orders)
+    function __construct(array $options, Goods $goods, Orders $orders)
     {
+        $this->options = $options;
         $this->goods = $goods;
         $this->orders = $orders;
     }

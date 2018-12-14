@@ -52,7 +52,7 @@ abstract class Base
     public function __construct(AdapterInterface $dbAdapter, LoggerInterface $logger, $isDebug = false)
     {
         $this->logger = $logger;
-        $this->isDebug = $isDebug;
+        $this->isDebug = $isDebug['debug'];
 
         if (empty($this->table)) {
             $this->logger->err("table is empty");
