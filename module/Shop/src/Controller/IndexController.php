@@ -7,6 +7,7 @@
 
 namespace Shop\Controller;
 
+use Shop\Model\Categories;
 use Shop\Model\Orders;
 use Shop\Model\Goods;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -14,20 +15,29 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
-    private $options, $goods, $orders;
+    private $options, $goods, $orders, $categories;
 
-    function __construct(array $options, Goods $goods, Orders $orders)
+    function __construct(array $options, Goods $goods, Orders $orders, Categories $categories)
     {
         $this->options = $options;
         $this->goods = $goods;
         $this->orders = $orders;
+        $this->categories = $categories;
     }
 
     public function indexAction()
     {
-        $page = $this->params()->fromQuery('page');
 
-        $goods_pagination = $this->goods->fetchAll()->setItemCountPerPage(10);
+        $where = [];
+        $page = $this->params()->fromQuery('page');
+        $id = $this->params()->fromRoute('id');
+
+        if(!empty($id)){
+            $where = ['id_category' => $id];
+        }
+
+        $categories = $this->categories->fetchAll()->setItemCountPerPage(100);
+        $goods_pagination = $this->goods->fetchAll($where)->setItemCountPerPage(10);
         $goods_pagination->setCurrentPageNumber($page);
 
         foreach ($goods_pagination as &$item){
@@ -37,7 +47,7 @@ class IndexController extends AbstractActionController
             $item['image'] = '/static/images/' . $item['image'];
         };
 
-        return new ViewModel([ 'items' =>  $goods_pagination]);
+        return new ViewModel([ 'items' =>  $goods_pagination, 'categories' => $categories]);
     }
 
     public function productAction()

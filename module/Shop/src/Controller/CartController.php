@@ -33,12 +33,15 @@ class CartController extends AbstractActionController
     public function cartAction()
     {
         $goods = $this->cart->getCart();
-        array_walk($goods, function(&$item){
-            if( empty($item['image']) ){
-                $item['image'] = 'no_image.png';
-            }
-            $item['image'] = '/static/images/' . $item['image'];
-        });
+
+        if(!empty($goods)){
+            array_walk($goods, function(&$item){
+                if( empty($item['image']) ){
+                    $item['image'] = 'no_image.png';
+                }
+                $item['image'] = '/static/images/' . $item['image'];
+            });
+        }
         
         return new ViewModel(['items' => $goods, 'total_price' => $this->cart->getTotlaPrice()]);
     }

@@ -10,6 +10,7 @@ namespace Shop;
 
 use Interop\Container\ContainerInterface;
 use Shop\Helpers\Cart;
+use Shop\Model\Categories;
 use Shop\Model\Goods;
 use Shop\Model\Orders;
 use Zend\Db\Adapter\AdapterInterface;
@@ -58,8 +59,9 @@ class Module implements ConfigProviderInterface
 
                     $goods = new Goods($adapter, $logger, $options);
                     $orders = new Orders($adapter, $logger, $options);
+                    $categories = new Categories($adapter, $logger, $options);
 
-                    return new Controller\IndexController($options, $goods, $orders);
+                    return new Controller\IndexController($options, $goods, $orders, $categories);
                 },
                 Controller\CartController::class => function ($container) {
                     /**

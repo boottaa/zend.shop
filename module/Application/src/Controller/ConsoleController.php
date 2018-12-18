@@ -35,7 +35,7 @@ class ConsoleController extends AbstractActionController{
 
         $sessions = "
         CREATE TABLE IF NOT EXISTS `sessions` (
-          `id` INT(11) NOT NULL DEFAULT '0',
+          `id` INT(11) NOT NULL AUTO_INCREMENT,
           `id_user` INT(11) NOT NULL DEFAULT '0',
           `session` VARCHAR(45) NOT NULL DEFAULT '',
           `ip` VARCHAR(45) NOT NULL DEFAULT '0.0.0.0',
@@ -44,7 +44,7 @@ class ConsoleController extends AbstractActionController{
 
         $users = "
         CREATE TABLE IF NOT EXISTS `users` (
-          `id` INT(11) NOT NULL DEFAULT '0',
+          `id` INT(11) NOT NULL AUTO_INCREMENT,
           `level` INT(11) NOT NULL DEFAULT '0' COMMENT 'level rights\n',
           `fname` VARCHAR(45) NULL DEFAULT NULL,
           `lname` VARCHAR(45) NULL DEFAULT NULL,
@@ -87,8 +87,7 @@ class ConsoleController extends AbstractActionController{
           `currency` varchar(5) NOT NULL DEFAULT 'RUB' COMMENT 'Валюта (рубль по умочанию)\n',
           `date_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           `is_deleted` enum('0','1') NOT NULL DEFAULT '0',
-          PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+          PRIMARY KEY (`id`))
         ";
 
         $pages = "
@@ -104,6 +103,14 @@ class ConsoleController extends AbstractActionController{
           PRIMARY KEY (`id`))
         ";
 
+        $categories = "
+        CREATE TABLE IF NOT EXISTS `categories` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `title` varchar(255) NOT NULL,
+          `description` text NOT NULL,
+          PRIMARY KEY (`id`))
+        ";
+
         echo "### CREATED TABLE SESSIONS ### \n";
         $this->db->query($sessions, Adapter::QUERY_MODE_EXECUTE);
         echo "### CREATED TABLE USERS ###### \n";
@@ -114,6 +121,8 @@ class ConsoleController extends AbstractActionController{
         $this->db->query($goods, Adapter::QUERY_MODE_EXECUTE);
         echo "### CREATED TABLE PAGES ###### \n";
         $this->db->query($pages, Adapter::QUERY_MODE_EXECUTE);
+        echo "### CREATED TABLE CATEGORIES ###### \n";
+        $this->db->query($categories, Adapter::QUERY_MODE_EXECUTE);
 
         return "### END ### \n";
     }
