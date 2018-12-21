@@ -24,5 +24,6 @@ return [
             'route' => 'cart',
             'class' => 'nav-link',
         ]
-    ]
+    ],
+
 ];

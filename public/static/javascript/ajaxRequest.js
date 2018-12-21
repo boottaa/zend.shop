@@ -1,13 +1,21 @@
 /**
  * Created by b.akhmedov on 12.12.18.
  */
-function sendGetRequest(url){
+function sendGetRequest(url, callback){
+    if(callback === undefined){
+        callback = function () {}
+    }
+
+    $('.sendGetRequest').remove();
     $.get(url, function(result){
-        $('div.container').prepend("<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\"> \
+        $('body').prepend("<div class=\"alert alert-danger alert-dismissible fade show sendGetRequest\" style='position: fixed; z-index: 9999; right: 20%; top 10%;' role=\"alert\"> \
         " + result + " \
         <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"> \
             <span aria-hidden=\"true\">&times;</span> \
         </button> \
-        </div>")
+        </div>");
+
+
+        $('.sendGetRequest').delay(1000).fadeOut("slow", callback());
     });
 }

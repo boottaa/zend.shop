@@ -29,7 +29,9 @@
                     <?= !empty($item['description']) ? $item['description'] : $item['description_short'] ?>
                 </p>
 
-                <button onclick="sendGetRequest('<?= $this->url('cart', ['action' => 'add', 'id' => $item['id']]) ?>');"
+                <button onclick="sendGetRequest('<?= $this->url('cart', ['action' => 'add', 'id' => $item['id']]) ?>', function() {
+                            alert('AAAA');
+                        });"
                         class="btn btn-success btn-lg btn-block text-uppercase">
                     Добавить в карзину
                 </button>
